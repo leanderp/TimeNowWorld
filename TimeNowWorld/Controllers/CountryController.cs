@@ -20,7 +20,7 @@ namespace TimeNowWorld.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllCountries()
+        public async Task<IActionResult> GetAllCountries()  
         {
             return Ok(await _countryRepository.GetAllCountries());
         }
