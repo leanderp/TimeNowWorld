@@ -39,16 +39,63 @@ namespace TimeNowWorld.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> InsertCountry(Country country)
+        public async Task<IActionResult> InsertCountry([FromBody]Country country)
         {
-            var status = await _countryRepository.InsertCountry(country);
-
-            if (!status)
+            if (country is null)
             {
-                return BadRequest(country);
+                return BadRequest();
             }
 
-            return Ok(country);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var create = await _countryRepository.InsertCountry(country);
+
+            if (!create)
+            {
+                return BadRequest();
+            }
+
+            return Created(new Uri($"{Request.Path}/{country.Id}", UriKind.Relative), country);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateCountry([FromBody] Country country)
+        {
+            if (country is null)
+            {
+                return BadRequest();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var create = await _countryRepository.UpdateCountry(country);
+
+            if (!create)
+            {
+                return BadRequest();
+            }
+
+            return NoContent();
+        }
+
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteCountry(int id)
+        {
+            var result = await _countryRepository.DeleteCountry(id);
+
+            if (!result)
+            {
+                return BadRequest();
+            }
+
+            return NoContent();
         }
     }
 }
