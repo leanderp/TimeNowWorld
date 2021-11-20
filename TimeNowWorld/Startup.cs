@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
 using TimeNowWorld.Data;
-using TimeNowWorld.Data.Repository;
 
 namespace TimeNowWorld
 {
@@ -21,7 +20,7 @@ namespace TimeNowWorld
             builder.Services.AddDbContext<TimeNowWorldContext>(o => o.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnectionString")));
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
         }

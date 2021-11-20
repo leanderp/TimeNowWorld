@@ -4,98 +4,97 @@ using TimeNowWorld.Data;
 using TimeNowWorld.Data.Repository;
 using TimeNowWorld.Models;
 
-namespace TimeNowWorld.Controllers
+namespace TimeNowWorld.Controllers;
+
+// https://www.c-sharpcorner.com/blogs/get-any-date-and-time-as-per-time-zone-in-c-sharp
+
+[Route("api/[controller]")]
+[ApiController]
+public class CountryController : Controller
 {
-
-    // https://www.c-sharpcorner.com/blogs/get-any-date-and-time-as-per-time-zone-in-c-sharp
-
-    [Route("api/[controller]")]
-    [ApiController]
-    public class CountryController : Controller
+    private readonly ICountryRepository _countryRepository;
+    public CountryController(TimeNowWorldContext countryContext)
     {
-        private readonly ICountryRepository _countryRepository;
-        public CountryController(TimeNowWorldContext countryContext)
+        _countryRepository = new CountryRepository(countryContext);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAllCountries()
+    {
+        return Ok(await _countryRepository.GetAllCountries());
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetCountryById(int id)
+    {
+        var country = await _countryRepository.GetCountryById(id);
+
+        if (country is null)
         {
-            _countryRepository = new CountryRepository(countryContext);
+            return NotFound();
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAllCountries()  
+        return Ok(country);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> InsertCountry([FromBody] Country country)
+    {
+        if (country is null)
         {
-            return Ok(await _countryRepository.GetAllCountries());
+            return BadRequest();
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetCountryById(int id)
+        if (!ModelState.IsValid)
         {
-            var country = await _countryRepository.GetCountryById(id);
-
-            if (country is null)
-            {
-                return NotFound();
-            }
-            
-            return Ok(country);
+            return BadRequest(ModelState);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> InsertCountry([FromBody]Country country)
+        var create = await _countryRepository.InsertCountry(country);
+
+        if (!create)
         {
-            if (country is null)
-            {
-                return BadRequest();
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var create = await _countryRepository.InsertCountry(country);
-
-            if (!create)
-            {
-                return BadRequest();
-            }
-
-            return Created(new Uri($"{Request.Path}/{country.Id}", UriKind.Relative), country);
+            return BadRequest();
         }
 
-        [HttpPut]
-        public async Task<IActionResult> UpdateCountry([FromBody] Country country)
+        return Created(new Uri($"{Request.Path}/{country.Id}", UriKind.Relative), country);
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> UpdateCountry([FromBody] Country country)
+    {
+        if (country is null)
         {
-            if (country is null)
-            {
-                return BadRequest();
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var create = await _countryRepository.UpdateCountry(country);
-
-            if (!create)
-            {
-                return BadRequest();
-            }
-
-            return NoContent();
+            return BadRequest();
         }
 
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCountry(int id)
+        if (!ModelState.IsValid)
         {
-            var result = await _countryRepository.DeleteCountry(id);
-
-            if (!result)
-            {
-                return BadRequest();
-            }
-
-            return NoContent();
+            return BadRequest(ModelState);
         }
+
+        var create = await _countryRepository.UpdateCountry(country);
+
+        if (!create)
+        {
+            return BadRequest();
+        }
+
+        return NoContent();
+    }
+
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteCountry(int id)
+    {
+        var result = await _countryRepository.DeleteCountry(id);
+
+        if (!result)
+        {
+            return BadRequest();
+        }
+
+        return NoContent();
     }
 }
+
