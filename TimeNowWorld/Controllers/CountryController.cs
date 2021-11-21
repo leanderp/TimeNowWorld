@@ -37,6 +37,31 @@ public class CountryController : Controller
         return Ok(country);
     }
 
+    [HttpGet("search/{name}")]
+    public async Task<IActionResult> GetCountryByName(string name)
+    {
+        int nLetters = 2;
+
+        if (name.Length <= nLetters)
+        {
+            return BadRequest($"Must have more than {nLetters} letters");
+        }
+        
+        var country = await _countryRepository.GetCountryByName(name);
+
+        if (country.Count() == 0)
+        {
+            country = await _countryRepository.GetCountryByAllName(name);
+
+            if (country.Count() == 0)
+            {
+                return NotFound(country);
+            }
+        }
+
+        return Ok(country);
+    }
+
     [HttpPost]
     public async Task<IActionResult> InsertCountry([FromBody] Country country)
     {

@@ -1,6 +1,8 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
 
+using System.Linq;
+
 using TimeNowWorld.Models;
 
 namespace TimeNowWorld.Data.Repository;
@@ -34,7 +36,17 @@ public class CountryRepository : ICountryRepository
 
     public async Task<Country?> GetCountryById(int id)
     {
-        return await _context.Countries.FirstOrDefaultAsync(c => c.Id == id);
+        return await _context.Countries.FirstOrDefaultAsync(c => c.IdCountry == id && c.Default == true);
+    }
+
+    public async Task<IEnumerable<Country?>> GetCountryByAllName(string name)
+    {
+        return await _context.Countries.Where(c => c.NameES.ToLower().Contains((string)name.ToLower()) && c.Default == true).ToListAsync();
+    }
+
+    public async Task<IEnumerable<Country?>> GetCountryByName(string name)
+    {
+        return await _context.Countries.Where(c => c.NameES.ToLower().StartsWith((string)name.ToLower()) && c.Default == true).ToListAsync();
     }
 
     public async Task<bool> InsertCountry(Country country)
@@ -45,6 +57,18 @@ public class CountryRepository : ICountryRepository
         }
 
         await _context.Countries.AddAsync(country);
+        var result = _context.SaveChanges();
+        return result > 0;
+    }
+
+    public async Task<bool> InsertListCountry(List<Country> country)
+    {
+        if (country is null)
+        {
+            throw new ArgumentNullException(nameof(country));
+        }
+
+        await _context.Countries.AddRangeAsync(country);
         var result = _context.SaveChanges();
         return result > 0;
     }

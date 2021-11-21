@@ -6,7 +6,10 @@ public interface ICountryRepository
 {
     Task<IEnumerable<Country?>> GetAllCountries();
     Task<Country?> GetCountryById(int id);
+    Task<IEnumerable<Country?>> GetCountryByName(string name);
+    Task<IEnumerable<Country?>> GetCountryByAllName(string name);
     Task<bool> InsertCountry(Country country);
+    Task<bool> InsertListCountry(List<Country> country);
     Task<bool> UpdateCountry(Country country);
     Task<bool> DeleteCountry(int id);
 }
