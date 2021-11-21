@@ -5,7 +5,7 @@
 
 Console.WriteLine("Hello, World!");
 
-string time = DateTime.UtcNow + "+00:00";
+string time = DateTime.UtcNow + "-04:00";
 
 var bb = DateTimeOffset.Parse(time).UtcDateTime;
 

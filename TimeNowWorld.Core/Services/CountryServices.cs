@@ -14,8 +14,9 @@ public class CountryServices : ICountryServices
 
     public async Task<IEnumerable<Country>> GetCountries()
     {
+        //var list = BackupData.ListCountries();
+        //await _countryRepository.InsertListCountry(list);
         var countries = await _countryRepository.GetAllCountries();
-
         return countries;
     }
 

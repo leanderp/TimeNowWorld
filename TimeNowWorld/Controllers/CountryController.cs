@@ -18,7 +18,9 @@ public class CountryController : Controller
     [HttpGet]
     public async Task<IActionResult> GetCountries()
     {
-        return Ok(await _countryServices.GetCountries());
+        var countries = await _countryServices.GetCountries();
+
+        return Ok(countries);
     }
 
     [HttpGet("{id}")]

@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TimeNowWorld.Models;
-
 public class Country
-{
+{   
     [Column("id")]
     public int Id { get; set; }
 

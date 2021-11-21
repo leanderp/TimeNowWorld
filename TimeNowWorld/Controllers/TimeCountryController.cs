@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
+using TimeNowWorld.Core.Services;
 using TimeNowWorld.Models;
 
 namespace TimeNowWorld.Controllers;
@@ -16,7 +17,9 @@ public class TimeCountryController : Controller
             BadRequest();
         }
 
-        return Ok(targetTime);
+        var targetEvent = TimeCountryServices.GetTimeCountry(targetTime);
+
+        return Ok(targetEvent);
     }
 }
 
