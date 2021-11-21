@@ -20,10 +20,3 @@ public class TimeCountryController : Controller
     }
 }
 
-public class TargetTime
-{
-    public Country? MyCountry { get; set; }
-
-    public List<Country>? TargetCountries { get; set; }
-}
-

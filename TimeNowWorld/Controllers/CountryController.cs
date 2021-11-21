@@ -1,33 +1,30 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-using TimeNowWorld.Data;
-using TimeNowWorld.Data.Repository;
+using TimeNowWorld.Core.Services;
 using TimeNowWorld.Models;
 
 namespace TimeNowWorld.Controllers;
-
-// https://www.c-sharpcorner.com/blogs/get-any-date-and-time-as-per-time-zone-in-c-sharp
 
 [Route("api/[controller]")]
 [ApiController]
 public class CountryController : Controller
 {
-    private readonly ICountryRepository _countryRepository;
-    public CountryController(TimeNowWorldContext countryContext)
+    private readonly ICountryServices _countryServices;
+    public CountryController(ICountryServices countryServices)
     {
-        _countryRepository = new CountryRepository(countryContext);
+        _countryServices = countryServices;
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAllCountries()
+    public async Task<IActionResult> GetCountries()
     {
-        return Ok(await _countryRepository.GetAllCountries());
+        return Ok(await _countryServices.GetCountries());
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetCountryById(int id)
+    public async Task<IActionResult> GetCountry(int id)
     {
-        var country = await _countryRepository.GetCountryById(id);
+        var country = await _countryServices.GetCountry(id);
 
         if (country is null)
         {
@@ -46,17 +43,12 @@ public class CountryController : Controller
         {
             return BadRequest($"Must have more than {nLetters} letters");
         }
-        
-        var country = await _countryRepository.GetCountryByName(name);
 
-        if (country.Count() == 0)
+        var country = await _countryServices.GetCountryByName(name);
+
+        if (!country.Any())
         {
-            country = await _countryRepository.GetCountryByAllName(name);
-
-            if (country.Count() == 0)
-            {
-                return NotFound(country);
-            }
+            return NotFound(country);
         }
 
         return Ok(country);
@@ -75,7 +67,7 @@ public class CountryController : Controller
             return BadRequest(ModelState);
         }
 
-        var create = await _countryRepository.InsertCountry(country);
+        var create = await _countryServices.InsertCountry(country);
 
         if (!create)
         {
@@ -98,7 +90,7 @@ public class CountryController : Controller
             return BadRequest(ModelState);
         }
 
-        var create = await _countryRepository.UpdateCountry(country);
+        var create = await _countryServices.UpdateCountry(country);
 
         if (!create)
         {
@@ -108,11 +100,10 @@ public class CountryController : Controller
         return NoContent();
     }
 
-
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteCountry(int id)
     {
-        var result = await _countryRepository.DeleteCountry(id);
+        var result = await _countryServices.DeleteCountry(id);
 
         if (!result)
         {

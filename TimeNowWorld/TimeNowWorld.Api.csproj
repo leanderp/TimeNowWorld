@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TimeNowWorld.Core\TimeNowWorld.Core.csproj" />
     <ProjectReference Include="..\TimeNowWorld.Data\TimeNowWorld.Data.csproj" />
   </ItemGroup>
 

@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeNowWorld", "TimeNowWorld\TimeNowWorld.csproj", "{6562C326-BB53-4B07-9EB4-C3521CA62DDF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeNowWorld.Api", "TimeNowWorld\TimeNowWorld.Api.csproj", "{6562C326-BB53-4B07-9EB4-C3521CA62DDF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeNowWorld.Models", "Models\TimeNowWorld.Models.csproj", "{399FE940-5778-46AF-A0EB-BA0DC34AF2BE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeNowWorld.Data", "TimeNowWorld.Data\TimeNowWorld.Data.csproj", "{EFA644BA-AE3A-4B57-83BA-058D72C4B29D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{4C928842-A4E6-4651-BAD9-997054B5ECC7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{4C928842-A4E6-4651-BAD9-997054B5ECC7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeNowWorld.Core", "TimeNowWorld.Core\TimeNowWorld.Core.csproj", "{1E81188D-E3B6-49C2-8770-63961857E457}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{4C928842-A4E6-4651-BAD9-997054B5ECC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C928842-A4E6-4651-BAD9-997054B5ECC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C928842-A4E6-4651-BAD9-997054B5ECC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E81188D-E3B6-49C2-8770-63961857E457}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E81188D-E3B6-49C2-8770-63961857E457}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E81188D-E3B6-49C2-8770-63961857E457}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E81188D-E3B6-49C2-8770-63961857E457}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

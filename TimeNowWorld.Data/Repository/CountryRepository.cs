@@ -1,8 +1,6 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
 
-using System.Linq;
-
 using TimeNowWorld.Models;
 
 namespace TimeNowWorld.Data.Repository;
@@ -34,19 +32,19 @@ public class CountryRepository : ICountryRepository
         return await _context.Countries.ToListAsync();
     }
 
-    public async Task<Country?> GetCountryById(int id)
+    public async Task<Country?> GetCountry(int id)
     {
         return await _context.Countries.FirstOrDefaultAsync(c => c.IdCountry == id && c.Default == true);
-    }
-
-    public async Task<IEnumerable<Country?>> GetCountryByAllName(string name)
-    {
-        return await _context.Countries.Where(c => c.NameES.ToLower().Contains((string)name.ToLower()) && c.Default == true).ToListAsync();
     }
 
     public async Task<IEnumerable<Country?>> GetCountryByName(string name)
     {
         return await _context.Countries.Where(c => c.NameES.ToLower().StartsWith((string)name.ToLower()) && c.Default == true).ToListAsync();
+    }
+
+    public async Task<IEnumerable<Country?>> GetCountryByAllName(string name)
+    {
+        return await _context.Countries.Where(c => c.NameES.ToLower().Contains((string)name.ToLower()) && c.Default == true).ToListAsync();
     }
 
     public async Task<bool> InsertCountry(Country country)

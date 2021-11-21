@@ -5,7 +5,7 @@ namespace TimeNowWorld.Data.Repository;
 public interface ICountryRepository
 {
     Task<IEnumerable<Country?>> GetAllCountries();
-    Task<Country?> GetCountryById(int id);
+    Task<Country?> GetCountry(int id);
     Task<IEnumerable<Country?>> GetCountryByName(string name);
     Task<IEnumerable<Country?>> GetCountryByAllName(string name);
     Task<bool> InsertCountry(Country country);

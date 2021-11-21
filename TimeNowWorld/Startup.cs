@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
+using TimeNowWorld.Core.Services;
 using TimeNowWorld.Data;
 
 namespace TimeNowWorld
@@ -18,7 +19,7 @@ namespace TimeNowWorld
         private static void ConfigureServices(WebApplicationBuilder builder)
         {
             builder.Services.AddDbContext<TimeNowWorldContext>(o => o.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnectionString")));
-
+            builder.Services.AddScoped<ICountryServices, CountryServices>();
             builder.Services.AddControllers();
 
             builder.Services.AddEndpointsApiExplorer();
