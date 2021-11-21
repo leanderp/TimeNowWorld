@@ -1,8 +1,10 @@
-﻿namespace TimeNowWorld.Models;
+﻿using TimeNowWorld.Models.DTOs;
+
+namespace TimeNowWorld.Models;
 
 public class TargetTime
 {
-    public Country? MyCountry { get; set; }
-    public List<Country>? TargetCountries { get; set; }
+    public CountyDTO MyCountry { get; set; }
+    public List<CountyDTO> TargetCountries { get; set; }
 }
 

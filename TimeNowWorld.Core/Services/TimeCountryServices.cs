@@ -24,7 +24,7 @@ public class TimeCountryServices
 
             foreach (var country in targetTime.TargetCountries)
             {
-                var timeZone = ClearTimeZone(country.TimeZone);
+                string timeZone = ClearTimeZone(country.TimeZone);
                 country.Time = TimeLocal(timeUtcTarget, timeZone);
             }
         }
