@@ -7,28 +7,39 @@ namespace TimeNowWorld.Core.Services;
 
 public class TimeCountryServices
 {
-    public static TargetTime GetTimeCountry(TargetTime targetTime)
+    public static TargetTime GetTimeCountry(TargetTime? targetTime)
     {
         if (targetTime is null)
         {
             throw new ArgumentNullException(nameof(targetTime));
         }
 
-        var timeInit = targetTime.MyCountry;
-
-        if (timeInit is not null && targetTime.TargetCountries is not null)
+        if (targetTime.MyCountry is not null)
         {
-            string time = $@"{timeInit.Time}{ClearTimeZone(timeInit.TimeZone)}";
-
-            var timeUtcTarget = TimeFormatUtc(time);
-
-            foreach (var country in targetTime.TargetCountries)
+            if (targetTime.MyCountry.TimeZone is not null)
             {
-                string timeZone = ClearTimeZone(country.TimeZone);
-                country.Time = TimeLocal(timeUtcTarget, timeZone);
+                string timeZoneInit = ClearTimeZone(targetTime.MyCountry.TimeZone);
+
+                string time = $@"{targetTime.MyCountry.Time}{timeZoneInit}";
+
+                var timeUtcTarget = TimeFormatUtc(time);
+
+                if (targetTime.TargetCountries is not null)
+                {
+                    foreach (var country in targetTime.TargetCountries)
+                    {
+                        if (country is not null)
+                        {
+                            if (country.TimeZone is not null)
+                            {
+                                string timeZone = ClearTimeZone(country.TimeZone);
+                                country.Time = TimeLocal(timeUtcTarget, timeZone);
+                            }
+                        }
+                    }
+                }
             }
         }
-
         return targetTime;
     }
 
@@ -82,7 +93,7 @@ public class TimeCountryServices
         var (isUtcPositive, time) = ClearDataUtc(timeZone);
 
         dateTime = Convert.ToDateTime(time);
-        
+
         DateTime dateTimeCopy = dateTime;
 
         if (isUtcPositive)

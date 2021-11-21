@@ -12,22 +12,26 @@ public class CountryServices : ICountryServices
         _countryRepository = new CountryRepository(countryContext);
     }
 
-    public async Task<IEnumerable<Country>> GetCountries()
+    public async Task<IEnumerable<Country?>?> GetCountries()
     {
-        //var list = BackupData.ListCountries();
-        //await _countryRepository.InsertListCountry(list);
         var countries = await _countryRepository.GetAllCountries();
+
+        if (countries is not null)
+        {
+            return countries;
+        }
+
         return countries;
     }
 
-    public async Task<Country> GetCountry(int id)
+    public async Task<Country?> GetCountry(int id)
     {
         var country = await _countryRepository.GetCountry(id);
 
         return country;
     }
 
-    public async Task<IEnumerable<Country>> GetCountryByName(string name)
+    public async Task<IEnumerable<Country?>> GetCountryByName(string name)
     {
         var country = await _countryRepository.GetCountryByName(name);
 

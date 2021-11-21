@@ -17,6 +17,11 @@ public class TimeCountryController : Controller
             BadRequest();
         }
 
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
         var targetEvent = TimeCountryServices.GetTimeCountry(targetTime);
 
         return Ok(targetEvent);
