@@ -3,6 +3,9 @@
 namespace TimeNowWorld.Models;
 public class Country
 {   
+    private string? _nameEN;
+    private string? _nameES;
+    
     [Column("id")]
     public int Id { get; set; }
 
@@ -10,10 +13,10 @@ public class Country
     public int IdCountry { get; set; }
 
     [Column("nameEN")]
-    public string? NameEN { get; set; }
+    public string NameEN { get => _nameEN ?? throw new InvalidOperationException("Unitialized property: " + nameof(NameEN)); set => _nameEN = value; }
 
     [Column("nameES")]
-    public string? NameES { get; set; }
+    public string? NameES { get => _nameES ?? throw new InvalidOperationException("Unitialized property: " + nameof(NameEN)); set => _nameES = value; }
 
     [Column("capital")]
     public string? Capital { get; set; }

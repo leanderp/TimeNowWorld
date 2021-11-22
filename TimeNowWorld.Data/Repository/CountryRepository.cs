@@ -36,14 +36,12 @@ public class CountryRepository : ICountryRepository
     {
         return await _context.Countries.FirstOrDefaultAsync(c => c.IdCountry == id && c.Default == true);
     }
-    
-    #pragma warning disable CS8602 // Desreferencia de una referencia posiblemente NULL
+
     public async Task<IEnumerable<Country?>> GetCountryByName(string name)
     {
         return await _context.Countries.Where(c => c.NameES.ToLower().StartsWith(name.ToLower()) && c.Default == true).ToListAsync();
     }
 
-    #pragma warning disable CS8602 // Desreferencia de una referencia posiblemente NULL
     public async Task<IEnumerable<Country?>> GetCountryByAllName(string name)
     {
         return await _context.Countries.Where(c => c.NameES.ToLower().Contains(name.ToLower()) && c.Default == true).ToListAsync();
